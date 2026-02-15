@@ -1,6 +1,7 @@
 import { Search, MapPin, Calendar, Users, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import SearchInput from './SearchInput';
+import { API_BASE_URL } from '../config';
 
 const Hero = ({ onSearch }) => {
     const [fromLocation, setFromLocation] = useState('');
@@ -10,7 +11,7 @@ const Hero = ({ onSearch }) => {
 
     useEffect(() => {
         // Fetch airports data for autocomplete
-        fetch('/api/airports')
+        fetch(`${API_BASE_URL}/airports`)
             .then(res => res.json())
             .then(data => setAirportsData(data))
             .catch(err => console.error("Error loading airports:", err));

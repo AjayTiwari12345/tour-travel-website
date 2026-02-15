@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { API_BASE_URL } from '../config';
 import Hero from '../components/Hero';
 import DestinationCard from '../components/DestinationCard';
 import AboutUs from '../components/AboutUs';
@@ -17,7 +18,7 @@ const Home = () => {
     const resultsRef = useRef(null);
 
     useEffect(() => {
-        fetch('/api/destinations')
+        fetch(`${API_BASE_URL}/destinations`)
             .then(res => res.json())
             .then(data => setDestinations(data))
             .catch(err => console.error("Error fetching destinations:", err));
@@ -53,7 +54,7 @@ const Home = () => {
             }, 100);
         }
 
-        fetch(`/api/search-flights?from=${from}&to=${to}&date=${date}`)
+        fetch(`${API_BASE_URL}/search-flights?from=${from}&to=${to}&date=${date}`)
             .then(res => res.json())
             .then(data => {
                 setFlightResults(data);

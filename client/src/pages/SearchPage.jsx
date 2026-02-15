@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import FlightResultCard from '../components/FlightResultCard';
+import { API_BASE_URL } from '../config';
 
 const SearchPage = () => {
     const [searchParams] = useSearchParams();
@@ -15,7 +16,7 @@ const SearchPage = () => {
     useEffect(() => {
         setIsLoading(true);
         // Fetch flights based on URL params
-        fetch(`/api/search-flights?from=${from}&to=${to}&date=${date}`)
+        fetch(`${API_BASE_URL}/search-flights?from=${from}&to=${to}&date=${date}`)
             .then(res => res.json())
             .then(data => {
                 setFlights(data);
