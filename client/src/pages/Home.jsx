@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { API_BASE_URL } from '../config';
+import { MOCK_DESTINATIONS } from '../mockData'; // Import fallback
 import Hero from '../components/Hero';
 import DestinationCard from '../components/DestinationCard';
 import AboutUs from '../components/AboutUs';
@@ -18,10 +19,17 @@ const Home = () => {
     const resultsRef = useRef(null);
 
     useEffect(() => {
+        // Attempt to fetch from API, fall back to mock data if it fails
         fetch(`${API_BASE_URL}/destinations`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("API Response not OK");
+                return res.json();
+            })
             .then(data => setDestinations(data))
-            .catch(err => console.error("Error fetching destinations:", err));
+            .catch(err => {
+                console.error("Error fetching destinations, using fallback:", err);
+                setDestinations(MOCK_DESTINATIONS); // Use Mock Data Immediately
+            });
     }, []);
 
     useEffect(() => {
